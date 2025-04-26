@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Produk - FVCKSTAR</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Oswald', sans-serif; }
+  </style>
+</head>
+<body class="bg-black text-white">
+  <header class="flex justify-between items-center px-6 py-4 fixed top-0 left-0 right-0 bg-black z-50 shadow-md">
+    <h1 class="text-2xl font-bold tracking-widest">FVCKSTAR</h1>
+    <nav class="space-x-6 text-sm">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="shop.html" class="hover:underline">Shop</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+    </nav>
+  </header>
+  <div class="h-20"></div>
+  <section class="px-6 py-10 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+    <div>
+      <img src="https://images.unsplash.com/photo-1618354691431-3e8dfdd7e351?auto=format&fit=crop&w=800&q=80" alt="Kaos FVCKSTAR" class="rounded-lg w-full h-auto" />
+    </div>
+    <div>
+      <h2 class="text-3xl font-bold mb-4">Kaos FVCKSTAR</h2>
+      <p class="text-gray-400 mb-2">Kategori: Kaos</p>
+      <p class="text-lg mb-4">Rp 299.000</p>
+      <p class="text-gray-300 mb-6">Kaos premium dengan bahan katun 100%, cocok buat kamu yang pengen tampil beda. Tersedia dalam ukuran S - XL.</p>
+      <label for="size" class="block mb-2">Pilih Ukuran:</label>
+      <select id="size" class="text-black px-4 py-2 rounded mb-4">
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+      <div class="flex gap-4">
+        <button onclick="addToCart()" class="bg-white text-black px-6 py-2 rounded hover:bg-gray-200 font-semibold">Tambah ke Keranjang</button>
+        <a href="cart.html" class="inline-block border border-white px-6 py-2 rounded hover:bg-white hover:text-black font-semibold">Lihat Keranjang</a>
+      </div>
+    </div>
+  </section>
+  <footer class="bg-zinc-900 text-center py-6 text-sm text-gray-400 mt-10">
+    &copy; 2025 FVCKSTAR. All rights reserved.
+  </footer>
+  <script>
+    function addToCart() {
+      const size = document.getElementById('size').value;
+      const product = {
+        name: 'Kaos FVCKSTAR',
+        size: size,
+        price: 299000
+      };
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(product);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Produk berhasil ditambahkan ke keranjang.');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FVCKSTAR</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url('ciko.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+<body class="min-h-screen w-full bg-black bg-opacity-80 text-white">  <!-- Logo dan Navigasi -->  <header class="flex items-center justify-between px-6 py-4">
+    <img src="logofs.png" alt="FVCKSTAR Logo" class="w-24 h-auto" />
+    <nav class="space-x-4">
+      <a href="#home" class="hover:underline">Home</a>
+      <a href="#shop" class="hover:underline">Shop</a>
+      <a href="#contact" class="hover:underline">Contact</a>
+      <a href="#cart" class="hover:underline">Cart</a>
+    </nav>
+  </header>  <!-- Home Section -->  <section id="home" class="flex flex-col items-center justify-center text-center px-4 py-20">
+    <h1 class="text-4xl md:text-6xl font-extrabold tracking-widest drop-shadow-lg">WELCOME TO FVCKSTAR</h1>
+    <p class="mt-4 text-xl text-gray-300">Streetwear with Attitude</p>
+    <div class="mt-8 flex gap-4">
+      <a href="#shop" class="bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition">SHOP NOW</a>
+      <a href="#contact" class="border border-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-black transition">CONTACT</a>
+    </div>
+  </section>  <!-- Shop Section -->  <section id="shop" class="px-6 py-12 bg-black/90">
+    <h2 class="text-3xl font-bold text-center mb-8">Shop</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="bg-white text-black p-4 rounded">
+        <img src="produk1.jpg" alt="Kaos FVCKSTAR" class="w-full mb-2 rounded">
+        <h3 class="text-lg font-bold">Kaos FVCKSTAR</h3>
+        <p class="text-sm">Harga: Rp 150.000</p>
+        <label class="text-sm">Size:
+          <select id="size-kaos" class="block mt-1 p-1 border border-gray-400 rounded">
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+          </select>
+        </label>
+        <button onclick="addToCart('Kaos FVCKSTAR', '150000', document.getElementById('size-kaos').value)" class="mt-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-800">Pesan</button>
+      </div>
+      <div class="bg-white text-black p-4 rounded">
+        <img src="produk2.jpg" alt="Jaket FVCKSTAR" class="w-full mb-2 rounded">
+        <h3 class="text-lg font-bold">Jaket FVCKSTAR</h3>
+        <p class="text-sm">Harga: Rp 350.000</p>
+        <label class="text-sm">Size:
+          <select id="size-jaket" class="block mt-1 p-1 border border-gray-400 rounded">
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+          </select>
+        </label>
+        <button onclick="addToCart('Jaket FVCKSTAR', '350000', document.getElementById('size-jaket').value)" class="mt-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-800">Pesan</button>
+      </div>
+    </div>
+  </section>  <!-- Cart Section -->  <section id="cart" class="px-6 py-12">
+    <h2 class="text-3xl font-bold text-center mb-8">Keranjang Belanja</h2>
+    <div id="cartItems" class="space-y-4 max-w-xl mx-auto"></div>
+    <div class="mt-6 flex flex-wrap justify-center gap-4">
+      <button onclick="checkoutWhatsApp()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Order via WhatsApp</button>
+      <button onclick="showQRIS()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Bayar via QRIS</button>
+      <button onclick="clearCart()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Batal</button>
+    </div>
+  </section>  <!-- QRIS Modal -->  <div id="qrisModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+    <div class="bg-white text-black rounded-lg p-6 text-center w-80">
+      <h2 class="text-lg font-bold mb-4">Scan QRIS untuk Pembayaran</h2>
+      <img src="qris-sample.png" alt="QRIS" class="w-full mb-4">
+      <button onclick="closeQRIS()" class="mt-2 text-sm text-blue-600">Tutup</button>
+    </div>
+  </div>  <!-- Contact Section -->  <section id="contact" class="px-6 py-12 bg-black/90">
+    <h2 class="text-3xl font-bold text-center mb-8">Kontak Kami</h2>
+    <form action="https://formspree.io/f/mnqeobbd" method="POST" class="max-w-md mx-auto space-y-4">
+      <input type="text" name="nama" placeholder="Nama" class="w-full px-4 py-2 rounded bg-white text-black" required>
+      <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 rounded bg-white text-black" required>
+      <textarea name="pesan" placeholder="Pesan" class="w-full px-4 py-2 rounded bg-white text-black" required></textarea>
+      <button type="submit" class="bg-white text-black px-6 py-2 rounded font-bold">Kirim</button>
+    </form>
+  </section>  <!-- Script -->  <script>
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer = document.getElementById('cartItems');
+
+    function addToCart(name, price, size) {
+      cartItems.push({ name, price, size });
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      alert(`${name} (Size: ${size}) ditambahkan ke keranjang`);
+      displayCart();
+    }
+
+    function displayCart() {
+      cartContainer.innerHTML = '';
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = '<p class="text-center text-gray-400">Keranjang kosong.</p>';
+        return;
+      }
+      cartItems.forEach((item, index) => {
+        cartContainer.innerHTML += `
+          <div class="bg-white text-black p-4 rounded shadow">
+            <p><strong>${item.name}</strong> (Size: ${item.size})</p>
+            <p>Harga: Rp ${item.price}</p>
+            <button onclick="removeItem(${index})" class="mt-2 text-sm text-red-600">Hapus</button>
+          </div>
+        `;
+      });
+    }
+
+    function removeItem(index) {
+      cartItems.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      displayCart();
+    }
+
+    function clearCart() {
+      localStorage.removeItem('cart');
+      location.reload();
+    }
+
+    function checkoutWhatsApp() {
+      if (cartItems.length === 0) return alert('Keranjang kosong!');
+      const pesan = cartItems.map(item => `- ${item.name} (Size: ${item.size}) (Rp ${item.price})`).join('%0A');
+      const total = cartItems.reduce((sum, item) => sum + parseInt(item.price), 0);
+      const message = `Halo saya ingin memesan:%0A${pesan}%0ATotal: Rp ${total}`;
+      window.open(`https://wa.me/62882001670009?text=${message}`, '_blank');
+    }
+
+    function showQRIS() {
+      document.getElementById('qrisModal').classList.remove('hidden');
+    }
+
+    function closeQRIS() {
+      document.getElementById('qrisModal').classList.add('hidden');
+    }
+
+    displayCart();
+  </script></body>
+</html>
