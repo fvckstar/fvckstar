@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FVCKSTAR - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Slide Background */
+    .bg-slide {
+      background-size: cover;
+      background-position: center;
+      transition: background-image 1s ease-in-out;
+    }
+
+    /* Running text */
+    .running-text {
+      width: 100%;
+      background: black;
+      overflow: hidden;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 50;
+    }
+
+    .text-content {
+      display: inline-block;
+      white-space: nowrap;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      animation: scrollText 15s linear infinite;
+      padding: 10px 0;
+    }
+
+    @keyframes scrollText {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+  </style>
+</head>
+<body class="text-white text-center relative bg-black">
+
+  <!-- Slideshow Background -->
+  <div id="bgSlider" class="absolute inset-0 z-0 bg-slide"></div>
+
+  <!-- Logo di tengah atas -->
+  <img src="logofs.png" alt="FVCKSTAR Logo" class="absolute top-4 left-1/2 transform -translate-x-1/2 w-12 h-12 z-30" />
+
+  <!-- Hamburger Menu -->
+  <div class="absolute top-6 left-6 z-30">
+    <button id="menuToggle" class="text-white text-3xl">&#9776;</button>
+  </div>
+
+  <!-- Isi Konten -->
+  <div id="mainContent" class="relative z-20 min-h-screen flex flex-col items-center justify-center px-4">
+    <h1 class="text-5xl font-bold mb-6">Welcome to FVCKSTAR</h1>
+    <nav class="space-x-6 text-xl">
+      <a href="shop.html" class="hover:underline">Shop</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+    </nav>
+  </div>
+
+  <!-- About & Sejarah -->
+  <div id="aboutContent" class="hidden relative z-20 min-h-screen flex flex-col items-center justify-center p-10 text-center">
+    <h2 class="text-4xl font-bold mb-4">ABOUT FVCKSTAR</h2>
+    <p class="text-lg mb-6">FVCKSTAR adalah brand fashion yang lahir dari semangat kebebasan, ekspresi, dan pemberontakan terhadap standar umum...</p>
+    <button id="showHistory" class="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-300">Lihat Sejarah Brand</button>
+  </div>
+
+  <div id="historyContent" class="hidden relative z-20 min-h-screen flex flex-col items-center justify-center p-10 text-center">
+    <h2 class="text-4xl font-bold mb-4">SEJARAH FVCKSTAR</h2>
+    <p class="text-lg mb-6">Sejak didirikan tahun 2024, FVCKSTAR terus berkembang menjadi simbol gaya urban yang tak terikat aturan...</p>
+    <button id="backHome" class="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-300">Kembali ke Home</button>
+  </div>
+
+  <!-- WhatsApp Admin -->
+  <a href="https://wa.me/6288222061121" 
+     class="fixed bottom-6 right-6 bg-white text-black px-4 py-2 rounded-full shadow-md hover:scale-105 transition z-40"
+     style="z-index: 1000;">
+    THIS WHATSAPP ADMIN
+  </a>
+
+  <!-- Running Text -->
+  <div class="running-text">
+    <div class="text-content">FVCKSTAR FVCKSTAR FVCKSTAR FVCKSTAR FVCKSTAR</div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    // Slideshow gambar
+    const images = [
+      'model1.jpg', // ganti nama sesuai gambar
+      'model2.jpg',
+      'model3.jpg'
+    ];
+    let current = 0;
+    const bgSlider = document.getElementById('bgSlider');
+    function updateBackground() {
+      bgSlider.style.backgroundImage = `url('${images[current]}')`;
+      current = (current + 1) % images.length;
+    }
+    updateBackground();
+    setInterval(updateBackground, 2000); // 2 detik
+
+    // Hamburger toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mainContent = document.getElementById('mainContent');
+    const aboutContent = document.getElementById('aboutContent');
+    const historyContent = document.getElementById('historyContent');
+    const showHistory = document.getElementById('showHistory');
+    const backHome = document.getElementById('backHome');
+
+    let menuState = 0;
+    menuToggle.addEventListener('click', () => {
+      if (menuState === 0) {
+        mainContent.classList.add('hidden');
+        aboutContent.classList.remove('hidden');
+        menuState = 1;
+      } else {
+        aboutContent.classList.add('hidden');
+        historyContent.classList.remove('hidden');
+        menuState = 2;
+      }
+    });
+
+    showHistory.addEventListener('click', () => {
+      aboutContent.classList.add('hidden');
+      historyContent.classList.remove('hidden');
+    });
+
+    backHome.addEventListener('click', () => {
+      historyContent.classList.add('hidden');
+      mainContent.classList.remove('hidden');
+      menuState = 0;
+    });
+  </script>
+</body>
+</html>

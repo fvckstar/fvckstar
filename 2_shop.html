@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FVCKSTAR Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Oswald', sans-serif; }
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 15s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-100%, 0); }
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+  <header class="flex justify-between items-center px-6 py-4 fixed top-0 left-0 right-0 bg-black z-50 shadow-md">
+    <h1 class="text-2xl font-bold tracking-widest">FVCKSTAR</h1>
+    <nav class="space-x-6 text-sm">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="shop.html" class="hover:underline">Shop</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+    </nav>
+  </header>
+
+  <div class="h-20"></div>
+
+  <div class="marquee bg-white text-black py-1 text-sm font-bold">
+    <span>FVCKSTAR FVCKSTAR FVCKSTAR FVCKSTAR FVCKSTAR FVCKSTAR</span>
+  </div>
+
+  <section id="categoryList" class="max-w-xl mx-auto px-6 py-10 text-center space-y-4">
+    <h2 class="text-xl font-semibold mb-4">Pilih Kategori</h2>
+    <button onclick="showProducts('T-shirt')" class="w-full py-2 bg-white text-black rounded">T-shirt</button>
+    <button onclick="showProducts('Sweater')" class="w-full py-2 bg-white text-black rounded">Sweater</button>
+    <button onclick="showProducts('Jacket')" class="w-full py-2 bg-white text-black rounded">Jacket</button>
+    <button onclick="showProducts('Topi')" class="w-full py-2 bg-white text-black rounded">Topi</button>
+    <button onclick="showProducts('Celana')" class="w-full py-2 bg-white text-black rounded">Celana</button>
+  </section>
+
+  <section id="productList" class="hidden max-w-6xl mx-auto px-6 py-10">
+    <button onclick="goBack()" class="mb-6 text-sm underline text-gray-400">&larr; Kembali ke kategori</button>
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+  </section>
+
+  <footer class="bg-zinc-900 text-center py-6 text-sm text-gray-400 mt-10">
+    &copy; 2025 FVCKSTAR. All rights reserved.
+  </footer>
+
+  <script>
+    const allProducts = {
+      "T-shirt": [
+        { name: "T-shirt Logo White", image: "https://via.placeholder.com/400x400?text=T-shirt+1" },
+        { name: "T-shirt Graphic Black", image: "https://via.placeholder.com/400x400?text=T-shirt+2" },
+        { name: "T-shirt Oversize", image: "https://via.placeholder.com/400x400?text=T-shirt+3" }
+      ],
+      "Sweater": [
+        { name: "Sweater Logo", image: "https://via.placeholder.com/400x400?text=Sweater+1" },
+        { name: "Sweater Plain", image: "https://via.placeholder.com/400x400?text=Sweater+2" },
+        { name: "Sweater Crewneck", image: "https://via.placeholder.com/400x400?text=Sweater+3" }
+      ],
+      "Jacket": [
+        { name: "Jacket Windbreaker", image: "https://via.placeholder.com/400x400?text=Jacket+1" },
+        { name: "Jacket Varsity", image: "https://via.placeholder.com/400x400?text=Jacket+2" },
+        { name: "Jacket Bomber", image: "https://via.placeholder.com/400x400?text=Jacket+3" }
+      ],
+      "Topi": [
+        { name: "Topi Snapback", image: "https://via.placeholder.com/400x400?text=Topi+1" },
+        { name: "Topi Bucket", image: "https://via.placeholder.com/400x400?text=Topi+2" },
+        { name: "Topi Trucker", image: "https://via.placeholder.com/400x400?text=Topi+3" }
+      ],
+      "Celana": [
+        { name: "Celana Cargo", image: "https://via.placeholder.com/400x400?text=Celana+1" },
+        { name: "Celana Jeans", image: "https://via.placeholder.com/400x400?text=Celana+2" },
+        { name: "Celana Pendek", image: "https://via.placeholder.com/400x400?text=Celana+3" }
+      ]
+    };
+
+    function showProducts(category) {
+      document.getElementById('categoryList').classList.add('hidden');
+      document.getElementById('productList').classList.remove('hidden');
+
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+
+      allProducts[category].forEach((product, index) => {
+        grid.innerHTML += `
+          <div class="bg-zinc-800 rounded-lg p-4 hover:shadow-xl transition cursor-pointer" onclick="goToProduct('${category}', ${index})">
+            <img src="${product.image}" class="w-full h-64 object-cover rounded mb-4">
+            <h3 class="text-lg font-semibold">${product.name}</h3>
+          </div>
+        `;
+      });
+    }
+
+    function goBack() {
+      document.getElementById('categoryList').classList.remove('hidden');
+      document.getElementById('productList').classList.add('hidden');
+    }
+
+    function goToProduct(category, index) {
+      const product = allProducts[category][index];
+      localStorage.setItem('selectedProduct', JSON.stringify(product));
+      window.location.href = 'product.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produk FVCKSTAR</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: white;
+    }
+
+    .product-container {
+      max-width: 800px;
+      margin: 100px auto 50px;
+      padding: 20px;
+      background-color: #111;
+      border-radius: 10px;
+    }
+
+    .product-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .product-slider img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      scroll-snap-align: center;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+
+    .product-details h2 {
+      margin-bottom: 10px;
+    }
+
+    .product-details select,
+    .product-details button {
+      margin-top: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .product-details select {
+      width: 100%;
+      background: #222;
+      color: white;
+    }
+
+    .product-details button {
+      background: #f0c14b;
+      color: black;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .product-details button:hover {
+      background: #e6b800;
+    }
+
+    .back {
+      color: #f0c14b;
+      text-decoration: none;
+      display: block;
+      margin-top: 20px;
+    }
+
+    .keranjang-float {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #f0c14b;
+      color: black;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="cart.html" class="keranjang-float">Lihat Keranjang</a>
+
+  <div class="product-container">
+    <div class="product-slider" id="slider">
+      <img id="product-img-1" src="images/produk1.jpg" alt="Produk 1" />
+      <img id="product-img-2" src="images/produk2.jpg" alt="Produk 2" />
+      <img id="product-img-3" src="images/produk3.jpg" alt="Produk 3" />
+    </div>
+    <div class="product-details">
+      <h2 id="product-title">Nama Produk</h2>
+      <p id="product-price">Rp0</p>
+
+      <label for="size">Pilih Ukuran:</label>
+      <select id="product-size">
+        <option value="">Pilih size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+
+      <button id="add-to-cart">Tambah ke Keranjang</button>
+      <button id="order-wa">Order via WhatsApp</button>
+
+      <a href="shop.html" class="back">← Kembali ke Shop</a>
+    </div>
+  </div>
+
+  <script>
+    const product = JSON.parse(localStorage.getItem("selectedProduct"));
+    if (product) {
+      document.getElementById("product-title").textContent = product.name;
+      document.getElementById("product-price").textContent = "Rp" + product.price;
+      document.getElementById("product-img-1").src = product.image;
+      document.getElementById("product-img-2").src = product.image2 || product.image;
+      document.getElementById("product-img-3").src = product.image3 || product.image;
+    }
+
+    document.getElementById("add-to-cart").addEventListener("click", () => {
+      const size = document.getElementById("product-size").value;
+      if (!size) return alert("Pilih ukuran terlebih dahulu.");
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ ...product, size });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Produk ditambahkan ke keranjang!");
+    });
+
+    document.getElementById("order-wa").addEventListener("click", () => {
+      const size = document.getElementById("product-size").value;
+      if (!size) return alert("Pilih ukuran terlebih dahulu.");
+      const message = `Halo, saya ingin memesan:\n\n${product.name}\nUkuran: ${size}\nHarga: Rp${product.price}`;
+      const whatsappURL = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, "_blank");
+    });
+
+    // Auto-slide setiap 3 detik
+    const slider = document.getElementById("slider");
+    let scrollIndex = 0;
+    setInterval(() => {
+      const images = slider.querySelectorAll("img");
+      scrollIndex = (scrollIndex + 1) % images.length;
+      images[scrollIndex].scrollIntoView({ behavior: "smooth", inline: "center" });
+    }, 3000);
+  </script>
+</body>
+</html>
