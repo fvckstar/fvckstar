@@ -14,4 +14,39 @@
     <a href="contact.html" class="hover:underline">Contact</a>
   </nav>
 </body>
+<!-- Tambahkan ini di bagian akhir body (misalnya paling bawah halaman) -->
+<div class="running-text">
+  <div class="text-content">FVCKSTAR FVCKSTAR FVCKSTAR FVCKSTAR FVCKSTAR</div>
+</div>
+
+<style>
+.running-text {
+  width: 100%;
+  background: black;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.text-content {
+  display: inline-block;
+  white-space: nowrap;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  animation: scrollText 15s linear infinite;
+  padding: 10px 0;
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+</style>
 </html>

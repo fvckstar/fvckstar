@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Detail Produk - FVCKSTAR</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -20,15 +19,16 @@
     </nav>
   </header>
   <div class="h-20"></div>
+
   <section class="px-6 py-10 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
     <div>
-      <img src="https://images.unsplash.com/photo-1618354691431-3e8dfdd7e351?auto=format&fit=crop&w=800&q=80" alt="Kaos FVCKSTAR" class="rounded-lg w-full h-auto" />
+      <img id="product-image" src="" alt="Produk FVCKSTAR" class="rounded-lg w-full h-auto" />
     </div>
     <div>
-      <h2 class="text-3xl font-bold mb-4">Kaos FVCKSTAR</h2>
-      <p class="text-gray-400 mb-2">Kategori: Kaos</p>
-      <p class="text-lg mb-4">Rp 299.000</p>
-      <p class="text-gray-300 mb-6">Kaos premium dengan bahan katun 100%, cocok buat kamu yang pengen tampil beda. Tersedia dalam ukuran S - XL.</p>
+      <h2 id="product-name" class="text-3xl font-bold mb-4"></h2>
+      <p id="product-category" class="text-gray-400 mb-2"></p>
+      <p id="product-price" class="text-lg mb-4"></p>
+      <p id="product-description" class="text-gray-300 mb-6"></p>
       <label for="size" class="block mb-2">Pilih Ukuran:</label>
       <select id="size" class="text-black px-4 py-2 rounded mb-4">
         <option value="S">S</option>
@@ -42,16 +42,28 @@
       </div>
     </div>
   </section>
+
   <footer class="bg-zinc-900 text-center py-6 text-sm text-gray-400 mt-10">
     &copy; 2025 FVCKSTAR. All rights reserved.
   </footer>
+
   <script>
+    const selected = JSON.parse(localStorage.getItem("selectedProduct"));
+
+    if (selected) {
+      document.getElementById("product-image").src = selected.image;
+      document.getElementById("product-name").textContent = selected.name;
+      document.getElementById("product-category").textContent = "Kategori: " + selected.category;
+      document.getElementById("product-price").textContent = "Rp " + selected.price.toLocaleString();
+      document.getElementById("product-description").textContent = selected.description;
+    }
+
     function addToCart() {
       const size = document.getElementById('size').value;
       const product = {
-        name: 'Kaos FVCKSTAR',
+        name: selected.name,
         size: size,
-        price: 299000
+        price: selected.price
       };
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
       cart.push(product);
